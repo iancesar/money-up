@@ -31,7 +31,7 @@ public class User implements Serializable
 	@NotEmpty
 	private String	name;
 
-	@Column
+	@Column(unique = true)
 	@NotNull
 	@NotEmpty
 	@Email
