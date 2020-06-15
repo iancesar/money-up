@@ -30,6 +30,11 @@ public class JwtTokenUtil implements Serializable
 		return getClaimFromToken(token, c -> c.get(claimName, requiredType));
 	}
 
+	public Long getUserIdFromToken(String token)
+	{
+		return getClaimFromToken(token, c -> c.get("id", Long.class));
+	}
+
 	//retrieve username from jwt token
 	public String getUsernameFromToken(String token)
 	{
@@ -69,6 +74,7 @@ public class JwtTokenUtil implements Serializable
 	public String generateToken(User user)
 	{
 		Map<String, Object> claims = new HashMap<>();
+		claims.put("id", user.getId());
 		claims.put("name", user.getName());
 
 		return doGenerateToken(claims, user.getEmail());

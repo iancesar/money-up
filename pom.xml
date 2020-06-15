@@ -17,17 +17,17 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		
+
 		<!-- Spring -->
 		<spring.version>2.2.7.RELEASE</spring.version>
 		<spring.beans.version>5.2.6.RELEASE</spring.beans.version>
-		
+
 		<!-- Javax -->
 		<javax.validation.version>2.0.1.Final</javax.validation.version>
-		
+
 		<!-- DTO -->
 		<model.mapper.version>2.3.7</model.mapper.version>
-		
+
 		<!-- Liquibase -->
 		<liquibase.maven.plugin.version>3.9.0</liquibase.maven.plugin.version>
 		<liquibase.hibernate5.version>3.8</liquibase.hibernate5.version>
@@ -72,10 +72,20 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<!-- DTO -->
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>${model.mapper.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-java8</artifactId>
 		</dependency>
 		<!-- Liquibase -->
 		<dependency>
