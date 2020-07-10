@@ -40,82 +40,91 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
-		<!-- DTO -->
+
 		<dependency>
 			<groupId>org.modelmapper</groupId>
 			<artifactId>modelmapper</artifactId>
 			<version>${model.mapper.version}</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-java8</artifactId>
 		</dependency>
-		<!-- Liquibase -->
-		<dependency>
-			<groupId>org.liquibase</groupId>
-			<artifactId>liquibase-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.liquibase</groupId>
-			<artifactId>liquibase-maven-plugin</artifactId>
-			<version>${liquibase.maven.plugin.version}</version>
-		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
 			<version>0.9.1</version>
 		</dependency>
+
 		<dependency>
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
 		</dependency>
+
+
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -127,6 +136,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
@@ -141,47 +151,22 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 
-			<!-- Liquibase -->
-			<plugin>
-				<groupId>org.liquibase</groupId>
-				<artifactId>liquibase-maven-plugin</artifactId>
-				<version>${liquibase.maven.plugin.version}</version>
-				<configuration>
-					<!-- Precisamos usar o arquivo de properties pq o hibernate extensio 
-						usa o Name Strategy da tabela ofical do JPA, ou seja, igual ao nome da classe 
-						para usar o do spring precisamos de uma configuracao a mais no referencesUrl, 
-						porem se passada no pom.xml da erro de conversão de xml então foi colocada 
-						no liquibase.properties -->
-					<propertyFile>src/main/resources/liquibase.properties</propertyFile>
-					<!-- Fora do arquivo liquibase.properties pq precisa ser interpolado 
-						pela variavel do maven -->
-					<diffChangeLogFile>
-						src/main/resources/db/diff/${timestamp}-diff-changelog.xml
-					</diffChangeLogFile>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.liquibase.ext</groupId>
-						<artifactId>liquibase-hibernate5</artifactId>
-						<version>${liquibase.hibernate5.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>org.springframework</groupId>
-						<artifactId>spring-beans</artifactId>
-						<version>${spring.beans.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>org.springframework.data</groupId>
-						<artifactId>spring-data-jpa</artifactId>
-						<version>${spring.version}</version>
-					</dependency>
-					<dependency>
-						<groupId>javax.validation</groupId>
-						<artifactId>validation-api</artifactId>
-						<version>${javax.validation.version}</version>
-					</dependency>
-				</dependencies>
-			</plugin>
+			<!-- <plugin> -->
+			<!-- <groupId>org.flywaydb</groupId> -->
+			<!-- <artifactId>flyway-maven-plugin</artifactId> -->
+			<!-- </plugin> -->
+
+			<!-- <plugin> <groupId>org.liquibase</groupId> <artifactId>liquibase-maven-plugin</artifactId> 
+				<version>${liquibase.maven.plugin.version}</version> <configuration> <propertyFile>src/main/resources/liquibase.properties</propertyFile> 
+				<diffChangeLogFile> src/main/resources/db/diff/${timestamp}-diff-changelog.xml 
+				</diffChangeLogFile> </configuration> <dependencies> <dependency> <groupId>org.liquibase.ext</groupId> 
+				<artifactId>liquibase-hibernate5</artifactId> <version>${liquibase.hibernate5.version}</version> 
+				</dependency> <dependency> <groupId>org.springframework</groupId> <artifactId>spring-beans</artifactId> 
+				<version>${spring.beans.version}</version> </dependency> <dependency> <groupId>org.springframework.data</groupId> 
+				<artifactId>spring-data-jpa</artifactId> <version>${spring.version}</version> 
+				</dependency> <dependency> <groupId>javax.validation</groupId> <artifactId>validation-api</artifactId> 
+				<version>${javax.validation.version}</version> </dependency> </dependencies> 
+				</plugin> -->
 		</plugins>
 	</build>
 
