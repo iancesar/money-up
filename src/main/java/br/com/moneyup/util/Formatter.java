@@ -1,16 +1,16 @@
-package br.com.moneyup.utils;
+package br.com.moneyup.util;
 
 import java.text.NumberFormat;
 import java.util.Locale;
 
-public class FormatterUtils
+public class Formatter
 {
 
 	private static final Locale			BRAZILIAN_LOCALE		= new Locale("pt", "BR");
 
 	private static final NumberFormat	CURRENCY_FORMATTER	= NumberFormat.getCurrencyInstance(BRAZILIAN_LOCALE);
 
-	private FormatterUtils()
+	private Formatter()
 	{
 	}
 

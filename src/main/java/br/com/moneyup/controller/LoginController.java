@@ -6,10 +6,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.moneyup.dto.JwtRequest;
@@ -19,7 +18,7 @@ import br.com.moneyup.repository.UserRepository;
 import br.com.moneyup.security.JwtTokenUtil;
 
 @RestController
-@CrossOrigin
+@RequestMapping(path = "/api/login")
 public class LoginController
 {
 
@@ -32,7 +31,7 @@ public class LoginController
 	@Autowired
 	private UserRepository			userRepository;
 
-	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+	@PostMapping
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception
 	{
 		authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());

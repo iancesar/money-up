@@ -25,6 +25,15 @@ public class JwtTokenUtil implements Serializable
 	@Value("${jwt.secret}")
 	private String					secret;
 
+	public JwtTokenUtil()
+	{
+	}
+
+	public JwtTokenUtil(String secret)
+	{
+		this.secret = secret;
+	}
+
 	public <T> T getClaimFromToken(String token, String claimName, Class<T> requiredType)
 	{
 		return getClaimFromToken(token, c -> c.get(claimName, requiredType));
@@ -61,7 +70,7 @@ public class JwtTokenUtil implements Serializable
 			token = token.substring(7);
 		}
 
-		return Jwts.parser().setSigningKey(getSecret()).parseClaimsJws(token).getBody();
+		return Jwts.parser().setSigningKey(getSecret().getBytes()).parseClaimsJws(token).getBody();
 	}
 
 	//check if the token has expired
@@ -73,17 +82,28 @@ public class JwtTokenUtil implements Serializable
 
 	public String generateToken(User user)
 	{
+		return generateToken(user, new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000));
+	}
+
+	public String generateToken(User user, Date expiresAt)
+	{
 		Map<String, Object> claims = new HashMap<>();
 		claims.put("id", user.getId());
 		claims.put("name", user.getName());
 
-		return doGenerateToken(claims, user.getEmail());
+		return doGenerateToken(claims, user.getEmail(), expiresAt);
 	}
 
-	private String doGenerateToken(Map<String, Object> claims, String subject)
+	private String doGenerateToken(Map<String, Object> claims, String subject, Date expiresAt)
 	{
-		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-			.setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000)).signWith(SignatureAlgorithm.HS512, getSecret()).compact();
+		return Jwts//
+			.builder()//
+			.setClaims(claims)//
+			.setSubject(subject)//
+			.setIssuedAt(new Date())//
+			.setExpiration(expiresAt)//
+			.signWith(SignatureAlgorithm.HS512, getSecret().getBytes())//
+			.compact();
 	}
 
 	public Boolean validateToken(String token, UserDetails userDetails)
@@ -96,4 +116,5 @@ public class JwtTokenUtil implements Serializable
 	{
 		return secret;
 	}
+
 }

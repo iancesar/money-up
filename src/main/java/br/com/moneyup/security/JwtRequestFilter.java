@@ -7,26 +7,25 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import br.com.moneyup.service.UserService;
-import io.jsonwebtoken.ExpiredJwtException;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter
 {
 
 	@Autowired
-	private UserService	userService;
+	protected UserService	userService;
 
 	@Autowired
-	private JwtTokenUtil	jwtTokenUtil;
+	protected JwtTokenUtil	jwtTokenUtil;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -38,19 +37,8 @@ public class JwtRequestFilter extends OncePerRequestFilter
 
 		if(requestTokenHeader != null && requestTokenHeader.startsWith("Bearer "))
 		{
-			jwtToken = requestTokenHeader.substring(7);
-			try
-			{
-				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
-			}
-			catch(IllegalArgumentException e)
-			{
-				System.out.println("Unable to get JWT Token");
-			}
-			catch(ExpiredJwtException e)
-			{
-				System.out.println("JWT Token has expired");
-			}
+			jwtToken = StringUtils.substring(requestTokenHeader, 7);
+			username = jwtTokenUtil.getUsernameFromToken(jwtToken);
 		}
 		else
 		{
@@ -58,7 +46,8 @@ public class JwtRequestFilter extends OncePerRequestFilter
 		}
 		if(username != null && SecurityContextHolder.getContext().getAuthentication() == null)
 		{
-			UserDetails userDetails = userService.loadUserByUsername(username);
+			CustomUserDetails userDetails = userService.loadUserByUsername(username);
+		
 			if(jwtTokenUtil.validateToken(jwtToken, userDetails))
 			{
 				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null,

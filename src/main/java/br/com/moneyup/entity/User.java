@@ -13,10 +13,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
 @Entity
 @Table(name = "\"user\"")
 public class User implements Serializable
@@ -43,5 +41,18 @@ public class User implements Serializable
 	@NotNull
 	@NotEmpty
 	private String					password;
+
+	protected User()
+	{
+	}
+
+	public User(Long id, @NotNull @NotEmpty String name, @NotNull @NotEmpty @Email String email, @NotNull @NotEmpty String password)
+	{
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.password = password;
+	}
 
 }

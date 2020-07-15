@@ -6,8 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import br.com.moneyup.H2DBTests;
+
 @SpringBootTest
-public class UserRepositoryTest
+public class UserRepositoryTest extends H2DBTests
 {
 
 	@Autowired
@@ -17,6 +19,12 @@ public class UserRepositoryTest
 	void findByEmail() throws Exception
 	{
 		assertThat(userRepository.findByEmail("teste@teste.com")).isPresent();
+	}
+
+	@Override
+	protected String getDataFile()
+	{
+		return "user";
 	}
 
 }
