@@ -1,25 +1,25 @@
 .DS_Store
 .thumbs.db
-src/main/app/.quasar/
-src/main/app/node_modules/
+src/quasar/.quasar/
+src/quasar/node_modules/
 
 # Quasar core related directories
 .quasar
-/src/main/app/dist
+/src/quasar/dist
 
 # Cordova related directories and files
-/src/main/app/src-cordova/node_modules
-/src/main/app/src-cordova/platforms
-/src/main/app/src-cordova/plugins
-/src/main/app/src-cordova/www
+/src/quasar/src-cordova/node_modules
+/src/quasar/src-cordova/platforms
+/src/quasar/src-cordova/plugins
+/src/quasar/src-cordova/www
 
 # Capacitor related directories and files
-/src/main/app/src-capacitor/www
-/src/main/app/src-capacitor/node_modules
+/src/quasar/src-capacitor/www
+/src/quasar/src-capacitor/node_modules
 
 # BEX related directories and files
-/src/main/app/src-bex/www
-/src/main/app/src-bex/js/core
+/src/quasar/src-bex/www
+/src/quasar/src-bex/js/core
 
 # Log files
 npm-debug.log*
@@ -64,9 +64,9 @@ build/
 
 ### VS Code ###
 .vscode/
-src/main/app/.quasar/
-src/main/app/yarn.lock
-src/main/app/node_modules/
+src/quasar/.quasar/
+src/quasar/yarn.lock
+src/quasar/node_modules/
 .attach_pid31927
 .attach_pid26357
 /.attach_pid31700

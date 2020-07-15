@@ -11,6 +11,8 @@ import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import br.com.moneyup.entity.enumerate.TransactionType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -54,8 +57,24 @@ public class Transaction implements Serializable
 	@NotNull
 	private User					user;
 
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	@Column
+	private TransactionType		type;
+
 	protected Transaction()
 	{
+	}
+
+	public Transaction(Long id, @NotNull @Size(min = 1, max = 100) String title, @NotNull BigDecimal price, @NotNull User user,
+		@NotNull TransactionType type)
+	{
+		super();
+		this.id = id;
+		this.title = title;
+		this.price = price;
+		this.user = user;
+		this.type = type;
 	}
 
 }
