@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -181,6 +182,43 @@
 								<phase>test</phase>
 								<goals>
 									<goal>report</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>create-migration-file</id>
+			<properties>
+				<timestamp>${maven.build.timestamp}</timestamp>
+				<maven.build.timestamp.format>ddMMyyyyHHmmssSSS</maven.build.timestamp.format>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>ru.yaal.maven</groupId>
+						<artifactId>write-text-files-maven-plugin</artifactId>
+						<version>1.1</version>
+						<configuration>
+							<charset>UTF-8</charset>
+							<files>
+								<file>
+									<path>${project.basedir}/src/main/resources/db/migration/V${timestamp}__${feature}.sql</path>
+									<lines>
+										<line>-- ${feature}</line>
+									</lines>
+								</file>
+							</files>
+						</configuration>
+						<executions>
+							<execution>
+								<id>write-text-files</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>write-text-files</goal>
 								</goals>
 							</execution>
 						</executions>

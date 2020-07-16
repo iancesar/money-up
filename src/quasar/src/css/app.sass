@@ -1,8 +1,37 @@
 // app global css in Sass form
-.company-gradient
-    background: linear-gradient(45deg, #00619d, #00b8b3)
+body
+    // background-color: #624561
+    //background: $gradient
+.gradient
+    background: $gradient
 
 .red-gradient
     background: linear-gradient(45deg, #d42215, #ef9393)
 .green-gradient
     background: linear-gradient(45deg, #6dc10a, #bfec89)
+
+@font-face
+    font-family: TitilliumWeb
+    src: url(./fonts/TitilliumWeb-ExtraLight.ttf)
+
+@font-face
+    font-family: ComfortaaLight
+    src: url(./fonts/Comfortaa-light.ttf)
+
+@font-face
+    font-family: ComfortaaMedium
+    src: url(./fonts/Comfortaa-medium.ttf)
+
+.text-default
+    color: $default !important
+    font-family: ComfortaaMedium   !important
+
+.text-currency
+    font-family: TitilliumWeb   !important
+
+.transaction-card
+    border-top-right-radius: 28px !important
+    border-top-left-radius: 28px !important
+
+.q-field
+  font-size: 18px !important

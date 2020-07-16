@@ -7,6 +7,7 @@ package br.com.moneyup.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -62,12 +63,20 @@ public class Transaction implements Serializable
 	@Column
 	private TransactionType		type;
 
+	@NotNull
+	@Column
+	private Boolean				consolidated;
+
+	@NotNull
+	@Column
+	private LocalDate				date;
+
 	protected Transaction()
 	{
 	}
 
 	public Transaction(Long id, @NotNull @Size(min = 1, max = 100) String title, @NotNull BigDecimal price, @NotNull User user,
-		@NotNull TransactionType type)
+		@NotNull TransactionType type, @NotNull Boolean consolidated, LocalDate date)
 	{
 		super();
 		this.id = id;
@@ -75,6 +84,8 @@ public class Transaction implements Serializable
 		this.price = price;
 		this.user = user;
 		this.type = type;
+		this.consolidated = consolidated;
+		this.date = date;
 	}
 
 }

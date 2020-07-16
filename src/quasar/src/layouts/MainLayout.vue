@@ -1,15 +1,14 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar :class="toolbarColor">
+    <!-- <q-header elevated> -->
+      <!-- <q-toolbar :class="toolbarColor">
         <q-toolbar-title>
           <div class="title">Demonstrativo de Pagamento</div>
           <div class="employee">Ian César Vidinha Rêgo</div>
         </q-toolbar-title>
         <q-btn flat icon="nights_stay" @click="changeTheme()" />
-        <!-- <q-btn flat icon="exit_to_app" /> -->
-      </q-toolbar>
-    </q-header>
+      </q-toolbar> -->
+    <!-- </q-header> -->
 
     <q-page-container>
       <router-view />

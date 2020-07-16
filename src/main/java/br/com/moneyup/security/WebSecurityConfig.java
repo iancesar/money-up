@@ -55,7 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 	protected void configure(HttpSecurity httpSecurity) throws Exception
 	{
 		// We don't need CSRF for this example
-		httpSecurity.csrf().disable()
+		httpSecurity.cors().and().csrf().disable()
 			// dont authenticate this particular request
 			.authorizeRequests().antMatchers("/api/login", "/h2-console").permitAll().
 			// all other requests need to be authenticated
@@ -67,4 +67,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 		// Add a filter to validate the tokens with every request
 		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}
+
 }

@@ -2,6 +2,7 @@ package br.com.moneyup.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import javax.validation.constraints.NotNull;
 
@@ -24,6 +25,10 @@ public class TransactionDTO implements Serializable
 
 	@NotNull
 	private TransactionType		type;
+
+	private Boolean				consolidated		= false;
+
+	private LocalDate				date					= LocalDate.now();
 
 	protected TransactionDTO()
 	{
