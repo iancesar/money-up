@@ -30,8 +30,15 @@ public class TransactionDTO implements Serializable
 
 	private LocalDate				date					= LocalDate.now();
 
+	private Short					repeatTimes;
+
 	protected TransactionDTO()
 	{
+	}
+
+	public boolean isRepeatTransaction()
+	{
+		return repeatTimes != null && repeatTimes > 1;
 	}
 
 }

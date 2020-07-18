@@ -71,7 +71,7 @@ public class Transaction implements Serializable
 	@Column
 	private LocalDate				date;
 
-	protected Transaction()
+	public Transaction()
 	{
 	}
 

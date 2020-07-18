@@ -1,6 +1,7 @@
 package br.com.moneyup.service;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +38,33 @@ public class TransactionService
 		Transaction transaction = modelMapper.map(transactionDTO, Transaction.class);
 		transaction.setUser(userRepository.getOne(userDetails.getUser().getId()));
 
-		transactionRepository.save(transaction);
+		List<Transaction> transactionsToSave = new ArrayList<>();
+		transactionsToSave.add(transaction);
+
+		if(transactionDTO.isRepeatTransaction())
+		{
+			createRepeatableTransactions(transactionsToSave, transactionDTO.getRepeatTimes());
+		}
+
+		transactionRepository.saveAll(transactionsToSave);
+
+	}
+
+	private void createRepeatableTransactions(List<Transaction> transactionsToSave, Short repeatTimes)
+	{
+
+		Transaction originalTransaction = transactionsToSave.get(0);
+		for(Short i = 1; i < repeatTimes; i++)
+		{
+			Transaction transaction = new Transaction();
+
+			BeanUtils.copyProperties(originalTransaction, transaction);
+
+			transaction.setDate(transaction.getDate().plusMonths(i));
+			transaction.setConsolidated(false);
+
+			transactionsToSave.add(transaction);
+		}
 	}
 
 	public List<TransactionsDTO> list(CustomUserDetails userDetails)
@@ -80,7 +107,6 @@ public class TransactionService
 			transactionRepository.save(consumer);
 
 		});
-
 	}
 
 }
