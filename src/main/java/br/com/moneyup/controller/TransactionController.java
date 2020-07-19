@@ -1,5 +1,6 @@
 package br.com.moneyup.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.moneyup.dto.MonthBalance;
 import br.com.moneyup.dto.TransactionDTO;
 import br.com.moneyup.dto.TransactionsDTO;
 import br.com.moneyup.security.CustomUserDetails;
@@ -37,10 +39,17 @@ public class TransactionController
 		transactionService.create(transactionDTO, userDetails);
 	}
 
-	@GetMapping
-	public List<TransactionsDTO> list(@AuthenticationPrincipal CustomUserDetails userDetails)
+	@GetMapping(path = "/{year}/{month}")
+	public List<TransactionsDTO> list(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Short month, @PathVariable Short year)
 	{
-		return transactionService.list(userDetails);
+		return transactionService.list(userDetails, year, month);
+	}
+
+	@GetMapping(path = "/{year}/{month}/balance")
+	public MonthBalance getMonthBalance(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Short month, @PathVariable Short year)
+		throws IOException
+	{
+		return transactionService.getBalance(year, month, userDetails);
 	}
 
 	@DeleteMapping(path = "/{id}")

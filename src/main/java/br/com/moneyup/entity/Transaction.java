@@ -18,6 +18,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -32,6 +33,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@Table(name = "\"transaction\"")
 public class Transaction implements Serializable
 {
 

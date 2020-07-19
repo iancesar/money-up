@@ -1,6 +1,8 @@
 package br.com.moneyup.service;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +13,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.moneyup.dto.MonthBalance;
 import br.com.moneyup.dto.TransactionDTO;
 import br.com.moneyup.dto.TransactionsDTO;
 import br.com.moneyup.entity.Transaction;
@@ -67,11 +70,11 @@ public class TransactionService
 		}
 	}
 
-	public List<TransactionsDTO> list(CustomUserDetails userDetails)
+	public List<TransactionsDTO> list(CustomUserDetails userDetails, Short year, Short month)
 	{
 
 		User user = userRepository.getOne(userDetails.getUser().getId());
-		List<Transaction> transactions = transactionRepository.findByUser(user);
+		List<Transaction> transactions = transactionRepository.find(user, year, month);
 
 		Type listType = new TypeToken<List<TransactionsDTO>>()
 		{
@@ -107,6 +110,13 @@ public class TransactionService
 			transactionRepository.save(consumer);
 
 		});
+	}
+
+	public MonthBalance getBalance(Short year, Short month, CustomUserDetails userDetails) throws IOException
+	{
+		BigDecimal balance = transactionRepository.getBalance(year, month, userDetails.getUser().getId());
+
+		return new MonthBalance(balance);
 	}
 
 }

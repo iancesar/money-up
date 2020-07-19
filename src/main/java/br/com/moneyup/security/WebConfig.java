@@ -22,7 +22,7 @@ public class WebConfig implements WebMvcConfigurer
 		headers[6] = "Access-Control-Request-Method";
 		headers[7] = "Access-Control-Request-Headers";
 
-		registry.addMapping("/**").allowedMethods("GET", "POST", "PUT", "DELETE, OPTIONS, Authorization").allowedHeaders(headers);
+		registry.addMapping("/**").allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "Authorization").allowedHeaders(headers);
 	}
 
 //	@Override

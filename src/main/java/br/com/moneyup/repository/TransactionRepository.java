@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import br.com.moneyup.entity.Transaction;
 import br.com.moneyup.entity.User;
 
-public interface TransactionRepository extends JpaRepository<Transaction, Long>
+public interface TransactionRepository extends JpaRepository<Transaction, Long>, TransactionRepositoryCustom
 {
 
 	List<Transaction> findByUser(User user);

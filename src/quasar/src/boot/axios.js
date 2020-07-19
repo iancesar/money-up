@@ -6,6 +6,6 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.defaults.headers.common["Authorization"] =
-  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0ZUB0ZXN0ZS5jb20iLCJuYW1lIjoiVGVzdGUiLCJpZCI6MSwiZXhwIjoxNTk1MTI4NTI5LCJpYXQiOjE1OTUxMTA1Mjl9.9zy3VcNjFsOB00fioNwcZuqREmxa3h5-DcyjdWDzxxec5KGtbGOVe6G5okmnuUpYsE3pkYYeWCBsDt24FoqZUw";
+  "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0ZUB0ZXN0ZS5jb20iLCJuYW1lIjoiVGVzdGUiLCJpZCI6MSwiZXhwIjoxNTk1MTQ2NTU5LCJpYXQiOjE1OTUxMjg1NTl9.AsO9uxi02hGG9opowzdByod7jHzCKRRDdx-Mtj3AL63RWUFqnoD1nzFy1iN51U-etT_9AreIPh1mIpxeSqCjsw";
 
 Vue.prototype.$axios = axiosInstance;

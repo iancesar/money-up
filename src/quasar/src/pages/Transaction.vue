@@ -1,12 +1,12 @@
 <template>
   <q-page>
     <div class="column">
-      <div class="col q-pb-xl bg-red-8">
+      <div class="col q-pb-xl" :class="'bg-' + color">
         <div
-          class="col text-h4 text-white text-center q-pt-xl"
+          class="col text-h4 text-white text-center q-pt-xl animate__animated animate__bounce"
           style="font-family:ComfortaaLight"
         >
-          NOVA DESPESA
+          Nova {{ title }}
         </div>
       </div>
 
@@ -18,7 +18,7 @@
                 <q-input
                   v-model="transaction.title"
                   label="Título"
-                  color="red-8"
+                  :color="color"
                   lazy-rules
                   :rules="[val => !!val || 'Campo obrigatório']"
                 />
@@ -28,14 +28,14 @@
                   fill-mask="0"
                   reverse-fill-mask
                   label="Preço"
-                  color="red-8"
+                  :color="color"
                   :rules="[val => !!val || 'Campo obrigatório']"
                 >
                 </q-input>
                 <q-input
                   v-model="transaction.date"
                   label="Data"
-                  color="red-8"
+                  :color="color"
                   :rules="[val => !!val || 'Campo obrigatório']"
                 >
                   <template v-slot:append>
@@ -46,7 +46,7 @@
                         transition-hide="scale"
                       >
                         <q-date
-                          color="red-8"
+                          :color="color"
                           mask="DD/MM/YYYY"
                           v-model="transaction.date"
                           @input="() => $refs.qDateProxy.hide()"
@@ -59,7 +59,7 @@
                   bottom-slots
                   v-model="transaction.repeatTimes"
                   label="Repetir mensalmente"
-                  color="red-8"
+                  :color="color"
                 >
                   <template v-slot:hint> Total: {{ sum }} </template>
                 </q-input>
@@ -69,9 +69,9 @@
                   v-model="transaction.consolidated"
                   spread
                   no-caps
-                  toggle-color="red-8"
+                  :toggle-color="color"
                   color="white"
-                  text-color="red-8"
+                  :text-color="color"
                   :options="[
                     { label: 'SIM', value: true },
                     { label: 'NÃO', value: false }
@@ -80,9 +80,11 @@
               </div>
             </q-card-section>
 
+            <div class="col q-pa-lg"></div>
+
             <q-card-actions align="around" class="fixed-bottom">
-              <q-btn flat color="grey-9">Cancelar</q-btn>
-              <q-btn flat color="red-8" type="submit">Salvar</q-btn>
+              <q-btn flat color="grey-9" to="/">Cancelar</q-btn>
+              <q-btn flat :color="color" type="submit">Salvar</q-btn>
             </q-card-actions>
           </q-card>
         </div>
@@ -115,6 +117,23 @@ export default {
           this.transaction.repeatTimes;
         return accounting.formatMoney(sum);
       }
+    },
+    color() {
+      if (this.isExpense) {
+        return "red-8";
+      } else {
+        return "green-8";
+      }
+    },
+    title() {
+      if (this.isExpense) {
+        return "Despesa";
+      } else {
+        return "Receita";
+      }
+    },
+    isExpense() {
+      return this.$route.params.type === "expense";
     }
   },
   methods: {
@@ -125,13 +144,15 @@ export default {
           "DD/MM/YYYY"
         ).format("YYYY-MM-DD");
 
+        const type = this.isExpense ? "EXPENSE" : "REVENUE";
+
         const request = {
           title: this.transaction.title,
           price: accounting.unformat(this.transaction.price),
           date: formattedDate,
           consolidated: this.transaction.consolidated,
           repeatTimes: this.transaction.repeatTimes,
-          type: "EXPENSE"
+          type: type
         };
 
         await this.$axios.post("/api/transaction", request);
